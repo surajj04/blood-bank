@@ -114,13 +114,6 @@ app.get("/bloodstock", async (req, res) => {
     try {
 
         const bloodData = await BloodStock.find({});
-        const bloodstockinfo = await BloodStock.find({});
-
-        const jsonData = JSON.stringify(bloodData)
-
-        console.log(bloodData[0].value)
-
-        let arr = [];
 
         let data = {
             name: "suraj",
@@ -163,6 +156,13 @@ app.get("/login", async (req, res) => {
 
 app.post("/login", async (req, res) => {
     try {
+
+        const param = {
+            message:'Login Successfully',
+            path:'Go to admin page'
+        }
+
+
         const email = req.body.email;
         const pass = req.body.password;
 
@@ -173,7 +173,7 @@ app.post("/login", async (req, res) => {
         } else if (checkEmail != null) {
             if (pass === checkEmail.password) {
                 setLogin.login = 1;
-                res.render('alert');
+                res.render('alert',param);
             } else {
                 res.send("Password Incorrect");
             }
@@ -184,37 +184,35 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.get("/check", (req, res) => {
-    res.render("alert")
-})
 
-app.get("/bloodupdate", async (req, res) => {
+app.post("/updateblood", async (req, res) => {
     try {
-        const data = await BloodStock.find({});
-        res.send(data)
+        const bloodgrp = req.body.bloodGrp;
+        const value = req.body.value;
+
+        // Find the blood stock data for the specified blood group
+        const tempdata = await BloodStock.findOne({ bloodType: bloodgrp });
+
+        if (!tempdata) {
+            return res.status(404).send("Blood group not found.");
+        }
+
+        // Update the blood stock value
+        (tempdata.value) += Number(value);
+
+        const param = {
+            message:'Update Successfully',
+            path:'Go back'
+        }
+
+        // Save the updated data
+        await tempdata.save();
+
+        res.render('alert',param);
     } catch (error) {
-        res.send(error.message)
+        res.status(500).send(error.message);
     }
-})
-
-
-app.post("/bloodupdate", async (req, res) => {
-    try {
-        const data = new BloodStock({
-            bloodType: req.body.bloodType,
-            value: req.body.value,
-        })
-
-        await data.save();
-
-        res.send(data);
-
-    } catch (error) {
-        res.send(error.message)
-    }
-})
-
-
+});
 
 app.listen(port, () => {
     console.log("server : " + port);
