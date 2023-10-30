@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Stock Page</title>
+    <style>
+        /* Basic CSS styles for your page */
+
+        #stock-table {
+            background-color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <%-include ('components/links') -%>
+</head>
+
+<body>
+    <%-include ('components/navbar') -%>
+        <div class="flex justify-center">
+            <div class="" id="piechart" style="width: 900px; height: 500px;"></div>
+        </div>
+        <%-include ('components/footer') -%>
+            <!-- <%= name%> -->
+</body>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    const tempdata = '<%- JSON.stringify(temp) %>';
+    console.log(tempdata);
+    console.log(typeof tempdata)
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable(JSON.parse(tempdata));
+
+        var options = {
+            title: 'Blood Stock'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+</script>
+
+</html>

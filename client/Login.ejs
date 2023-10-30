@@ -1,0 +1,255 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <%-include ('components/links') -%>
+</head>
+
+<body>
+    <%-include ('components/navbar') -%>
+
+        <% if(login===0){ %>
+            <div class="">
+                <h2 class="text-center text-4xl my-10">Login Page</h2>
+                <div class="flex justify-center">
+                    <form action="/login" method="post">
+                        <div class="my-2 flex ">
+                            <div class="" style="background-color: gray; color: white; padding: 8px 14px;">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="">
+                                <input class="input-border p-2" type="email" placeholder="Email id" name="email">
+                            </div>
+                        </div>
+                        <div class="my-2 flex">
+                            <div class="" style="background-color: gray; color: white; padding: 8px 14px;">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <div class="">
+                                <input class="input-border p-2" type="password" placeholder="Password" name="password">
+                            </div>
+                        </div>
+                        <div class="text-center my-4">
+                            <button class="btn-submit w-full rounded-lg text-xs " type="submit">LOGIN</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <%} else{%>
+                <div class="mx-4 my-10">
+                    <div class="w-3/5 mx-auto" style="background-color:bisque">
+                        <ul class="flex justify-center " style="position: sticky;">
+                            <li class="my-4" onclick="swtichPage(1)"><a href="#">Contact Details</a></li>
+                            <li class="my-4 mx-10" onclick="swtichPage(2)"><a href="#">Donor Information</a></li>
+                            <li class="my-4 " onclick="swtichPage(3)"><a href="#">Blood Request</a></li>
+                            <li class="my-4 mx-10" onclick="swtichPage(4)"><a href="#">Update Blood Stock</a> </li>
+                        </ul>
+                    </div>
+                    <div id="tab1" class="block">
+                        <div class="">
+                            <h2 class="text-2xl my-4">
+                                Contact Response Details
+                            </h2>
+                        </div>
+                        <div class="">
+
+
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Message</th>
+                                    </tr>
+
+                                    <% contact.forEach(function(ele){ %>
+                                        <tr>
+                                            <td>
+                                                <%=ele.name%>
+                                            </td>
+                                            <td>
+                                                <%=ele.email%>
+                                            </td>
+                                            <td>
+                                                <%=ele.phone%>
+                                            </td>
+                                            <td>
+                                                <%=ele.message%>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="tab2" class="hidden">
+                        <div class="">
+                            <h2 class="text-2xl my-4">
+                                Donor Information
+                            </h2>
+                        </div>
+                        <div class="">
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Blood Group</th>
+                                </tr>
+
+                                <% donor.forEach(function(ele){ %>
+                                    <tr>
+                                        <td>
+                                            <%=ele.name%>
+                                        </td>
+                                        <td>
+                                            <%=ele.contactNo%>
+                                        </td>
+                                        <td>
+                                            <%=ele.bloodGrp%>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab3" class="hidden">
+                        <div class="">
+                            <h2 class="text-2xl my-4">
+                                Blood Request
+                            </h2>
+                        </div>
+                        <div class="">
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Blood Group</th>
+                                    <th>Contact</th>
+                                    <th>Location</th>
+                                    <th>Date</th>
+                                </tr>
+
+                                <% bloodreq.forEach(function(ele){ %>
+                                    <tr>
+                                        <td>
+                                            <%=ele.name%>
+                                        </td>
+                                        <td>
+                                            <%=ele.bloodGrp%>
+                                        </td>
+                                        <td>
+                                            <%=ele.contactNo%>
+                                        </td>
+                                        <td>
+                                            <%=ele.location%>
+                                        </td>
+                                        <td>
+                                            <%=ele.date%>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab4" class="hidden">
+                        <div class="">
+                            <div class="">
+                                <h2 class="text-2xl my-4">
+                                    Blood Stock
+                                </h2>
+                                <!-- <p class="my-6"> &ensp;Available (ml)</p> -->
+                            </div>
+                            <div class="" onclick="showStock()">
+                                <button class="show-btn my-4" id="block-btn" >
+                                    Show Stock
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hidden" id="stock-block">
+                            <table>
+                                <tr>
+                                    <th>Blood Group</th>
+                                    <th>Available (ml)</th>
+                                </tr>
+
+                                <% bloodstock.forEach(function(ele){ %>
+                                    <tr>
+                                        <td>
+                                            <%=ele.bloodType%>
+                                        </td>
+                                        <td>
+                                            <%=ele.value%>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+
+
+
+</body>
+
+<script>
+    const tab1 = document.getElementById("tab1")
+    const tab2 = document.getElementById("tab2")
+    const tab3 = document.getElementById("tab3")
+    const tab4 = document.getElementById("tab4")
+
+    const stock = document.getElementById("stock-block")
+    const blockBTN = document.getElementById("block-btn")
+    
+
+
+    function swtichPage(tab) {
+        switch (tab) {
+            case 1:
+                tab1.style.display = 'block'
+                tab2.style.display = 'none'
+                tab3.style.display = 'none'
+                tab4.style.display = 'none'
+                break;
+            case 2:
+                tab1.style.display = 'none'
+                tab2.style.display = 'block'
+                tab3.style.display = 'none'
+                tab4.style.display = 'none'
+                break;
+            case 3:
+                tab1.style.display = 'none'
+                tab2.style.display = 'none'
+                tab3.style.display = 'block'
+                tab4.style.display = 'none'
+                break;
+            case 4:
+                tab1.style.display = 'none'
+                tab2.style.display = 'none'
+                tab3.style.display = 'none'
+                tab4.style.display = 'block'
+                break;
+        }
+    }
+
+    function showStock(){
+        if(stock.style.display=='none'){
+            stock.style.display='block'
+            blockBTN.innerText = "Hide Stock"
+        }else{
+            stock.style.display='none'
+            blockBTN.innerText = "Show Stock"
+        }
+    }
+
+
+</script>
+
+</html>

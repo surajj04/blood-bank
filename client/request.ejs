@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maggie Blood Bank Blood Request</title>
+
+    <%-include ('components/links') -%>
+</head>
+
+<body>
+    <%-include ('components/navbar') -%>
+        <div class="my-4">
+            <h1 class="text-4xl my-10 text-center">Blood Request Form</h1>
+            <div class="flex justify-center">
+                <form id="" class="w-2/5" method="post" action="/bloodrequest">
+                    <div class="my-2">
+                        <label class="block" for="">Name</label>
+                        <input class="input-border my-1 w-full py-2 px-2" type="text" id="name" name="name" required>
+                    </div>
+                    <div class="my-4">
+                        <label for="blood-group">Blood Group:</label>
+                        <select id="blood-group input" name="bloodGrp" required>
+                            <option class="input" value="A+">A+</option>
+                            <option class="input" value="A-">A-</option>
+                            <option class="input" value="B+">B+</option>
+                            <option class="input" value="B-">B-</option>
+                            <option class="input" value="AB+">AB+</option>
+                            <option class="input" value="AB-">AB-</option>
+                            <option class="input" value="O+">O+</option>
+                            <option class="input" value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="my-2">
+                        <label class="block" for="contact">Contact Number:</label>
+                        <input class="input-border my-1 w-full py-2 px-2" type="tel" id="contact" name="contactNo" required>
+                    </div>
+                    <div class="">
+                        <label class="block" for="location">Location</label>
+                        <input class="input-border my-1 w-full py-2 px-2" type="text" id="location" name="location" required>
+                    </div>
+                    <div class="my-4 flex justify-center">
+                        <button class="btn-submit2 w-2/5" type="submit" id="submit-button">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <%-include ('components/footer')-%>
+
+</body>
+
+</html>
